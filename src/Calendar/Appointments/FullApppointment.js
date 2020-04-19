@@ -14,7 +14,7 @@ class FullAppointment extends React.Component {
                         <h6>{appointmentData.title}</h6>
                         {
                             appointmentData.status !== STATUS_FREE && (
-                                <p>Patient: {appointmentData.patientName}</p>
+                                "Patient: " + appointmentData.patientName
                             )
                         }
                         </Alert>

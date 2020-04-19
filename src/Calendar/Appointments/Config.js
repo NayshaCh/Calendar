@@ -16,7 +16,8 @@ export const generateAppointmentData = (appointment) => {
             status: appointment.status,
             date: appointment.date,
             title: 'Appointment ' + appointment.status,
-            patientName: appointment.patientName
+            patientName: appointment.patientName,
+            comments: appointment.comments
         }
     );
     
@@ -32,7 +33,7 @@ export const generateAppointmentData_Color = (appointment) => {
             patientName: appointment.patientName,
             colorStatus: appointment.status === STATUS_FREE ? COLOR_STATUS_FREE :
                         appointment.status === STATUS_CONFIRM ? COLOR_STATUS_CONFIRM : COLOR_STATUS_PENDING,
-            
+            comments: appointment.comments
         }
     );
 }
@@ -43,7 +44,8 @@ export const newAppointmentData = () => {
             id: -1,
             status: STATUS_FREE,
             date: new moment(),
-            title: 'Appointment ' + STATUS_FREE
+            title: 'Appointment ' + STATUS_FREE,
+            comments: ''
         }
     );
 }
@@ -72,7 +74,7 @@ export const setUpdateFormat = (appointment, day, hour, min) => {
 }
 
 export const setAddFormat = (appointment, day, hour, min) => {
-    "localhos.../id - PUT" 
+
     return({
         id : appointment.id,
         idUser : appointment.idUser,
@@ -82,4 +84,55 @@ export const setAddFormat = (appointment, day, hour, min) => {
         status: appointment.status,
         comments: appointment.comments
     });
+}
+
+export const getAddFormat = (appointment, id) => {
+    return({
+        id: id,
+        idUser : appointment.idUser,
+        idDoctor: appointment.idDoctor,
+        date: new moment(appointment.date+" "+appointment.hour),
+        status: appointment.status,
+        comments: appointment.comments
+    });
+}
+
+export const getUpdateFormat = (appointment) =>{
+    return({
+        id: appointment.id,
+        idUser : appointment.idUser,
+        idDoctor: appointment.idDoctor,
+        date: new moment(appointment.date+" "+appointment.hour),
+        status: appointment.status,
+        comments: appointment.comments
+    });
+}
+
+export const setScheduleFormat = (date, minMin, minHour, maxMin, maxHour) => {
+    let actDate = new moment(date+' '+minHour+":"+minMin);
+    let endDate = new moment(date+' '+maxHour+":"+maxMin);
+    return({
+        idDoctor: idDoctor,
+        attentionDate: date,
+        startTime: actDate.format('HH:mm'),
+        endTime: endDate.format('HH:mm')
+    });
+}
+
+export const createFreeAppointments = (schedule) => {
+    let appointments = [];
+    let actDate = new moment(schedule.attentionDate+' '+schedule.startTime);
+    let endDate = new moment(schedule.attentionDate+' '+schedule.endTime);
+    for(actDate; actDate <= endDate; actDate.add(30, 'minutes')){
+        appointments.push({ 
+            id: appointments.length + 1,
+            idUser : null,
+            idDoctor: idDoctor,
+            date: new moment(actDate),
+            status: STATUS_FREE,
+            comments: ''
+        });
+    }
+
+    return appointments;
 }

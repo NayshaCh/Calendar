@@ -2,13 +2,15 @@ import React from 'react';
 import DayView from './Views/Day/DayView';
 import StatusBar from './Views/ConfigBar/StatusBar'
 import moment from 'moment';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import PickerDay from './Views/ConfigBar/PickerDay';
-import { getDateAppointments } from './util/request';
+import { getAppointments } from './util/request';
 import { stringDate, generateAppointmentData } from './Appointments/Config';
 import AppointmentForm from './Appointments/AppointmentForm';
 import MoreInfoAppointment from './Appointments/MoreInfo';
 import AlertMessage from './Alerts/AlertMessage';
+import AddIcon from '@material-ui/icons/Add';
+import ScheduleForm from './Forms/ScheduleForm';
 
 export default class Calendar extends React.Component {
 
@@ -24,7 +26,7 @@ export default class Calendar extends React.Component {
             },
             dateSelected: {
                 date: today,
-                appointments: getDateAppointments(today)
+                appointments: getAppointments(today)
             },
             modal: {
                 info: false,
@@ -36,35 +38,48 @@ export default class Calendar extends React.Component {
                 statusOk: true,
                 show: false,
                 message: '',
-            }
+            },
+            schedule : false
         }
         
     }
 
+    showSchedule = (show) => {
+        this.setState({schedule: show});
+    }
+
     showAlert = (status, msg) => {
-        console.log('empece')
-        setTimeout( this.setState({
+        this.setState({
             alert : {
                 statusOk: status,
                 show: true,
                 message: msg,
             }
-        }) , 5000);
+        });
 
-        this.setState({
+        setTimeout( () => {this.setState({
             alert : {
                 statusOk: true,
                 show: false,
                 message: ''
             }
-        });
+        })}, 2000);
     }
 
     setDateSelected = (day) => {
         this.setState({
             dateSelected: {
                 date: day,
-                appointments: getDateAppointments(day)
+                appointments: getAppointments(day)
+            }
+        });
+    }
+
+    setAppointments = (day, appointments) => {
+        this.setState({
+            dateSelected: {
+                date: day,
+                appointments: appointments
             }
         });
     }
@@ -106,7 +121,7 @@ export default class Calendar extends React.Component {
     render(){
         return(
             <div>
-                <Container>
+                <Container fluid>
                     <Row>
                         <Col>
                             <StatusBar status={this.state.status} setStatus={this.setStatus}/>
@@ -118,8 +133,15 @@ export default class Calendar extends React.Component {
                 </Container>
                 <DayView dateSelected={this.state.dateSelected} status={this.state.status} showModal={this.showModal}/>
                 <MoreInfoAppointment modal={this.state.modal} setModal={this.setModal} showAlert={this.showAlert} setDateSelected={this.setDateSelected}/>
-                <AppointmentForm modal={this.state.modal} setModal={this.setModal}/>
+                <AppointmentForm modal={this.state.modal} setModal={this.setModal} showAlert={this.showAlert} setDateSelected={this.setDateSelected}/>
+
                 <AlertMessage alert={this.state.alert} />
+                <ScheduleForm schedule={this.state.schedule} showSchedule={this.showSchedule} setAppointments={this.setAppointments}/>
+                <div className='container-schedule'>
+                    <Button className='btn-add-schedule' onClick={(e)=> {this.showSchedule(true)} }>
+                        <AddIcon />
+                    </Button>
+                </div>
             </div>
         );
     }

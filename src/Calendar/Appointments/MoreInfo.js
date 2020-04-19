@@ -1,8 +1,8 @@
 import React from 'react';
-import { Modal, Container, Row, Col } from 'react-bootstrap';
+import { Modal, Container, Row, Col, FormLabel, FormGroup, Button, ButtonGroup } from 'react-bootstrap';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 import FaceRounded from '@material-ui/icons/FaceRounded';
-import Room from '@material-ui/icons/Room';
+import CommentIcon from '@material-ui/icons/Comment';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { STATUS_FREE} from './Config';
@@ -20,7 +20,6 @@ class MoreInfoAppointment extends React.Component {
         const appointment = this.props.modal.appointment;
         this.props.setModal(false, false, null);
         deleteAppointement(appointment, this.props.setDateSelected, this.props.showAlert);
-        console.log('MoreInfo Delete')
     }
 
     onHide = () => {
@@ -36,27 +35,35 @@ class MoreInfoAppointment extends React.Component {
             <Modal show={this.props.modal.info} onHide={this.onHide} animation='true'>
                 <Modal.Header closeButton>
                     <Container>
-                        <Row><Col> 
-                            <EditIcon onClick={this.editAppointment}/>
-                            <DeleteIcon onClick={this.deleteAppointment} /> 
+                        <Row ><Col className="d-flex justify-content-end btns-container"> 
+                        <ButtonGroup>
+                            <Button className='close btns-form' ><EditIcon onClick={this.editAppointment}/></Button>
+                            <Button className='close btns-form'><DeleteIcon onClick={this.deleteAppointment} /></Button> 
+                        </ButtonGroup>
                         </Col></Row>
                         {!isNullAppointment && (<Row><Col> 
                             <Modal.Title className=''>{appointment.title}</Modal.Title> 
                         </Col></Row>)}
                     </Container>
                 </Modal.Header>
-                <Modal.Body className="align-bottom">
+                <Modal.Body >
                     
-                    { !isNullAppointment && 
-                        (<Container>
-                            <Row> 
-                                <CalendarToday />{appointment.date.format('LLLL')}
-                            </Row>
-                            {!isFreeAppointment && (<Row>
-                                <FaceRounded />{appointment.patientName}
-                            </Row>)}
-                        </Container>)
-                    }
+                { !isNullAppointment && 
+                    (<Container >
+                        <Row>
+                            <div className='col-form-label'><CalendarToday /></div>
+                            <FormLabel column>{appointment.date.format('LLLL')}</FormLabel>
+                        </Row>
+                        {!isFreeAppointment && (<Row>
+                            <div className='col-form-label'><FaceRounded /></div>
+                            <FormLabel column>{appointment.patientName}</FormLabel>
+                        </Row>)}
+                        <Row> 
+                            <div className='col-form-label'><CommentIcon /></div>
+                            <FormLabel column>{appointment.comments}</FormLabel>
+                        </Row>
+                    </Container>)
+                }
                     
                 </Modal.Body>
             </Modal>

@@ -1,39 +1,49 @@
-.w3-container{padding:0.01em 16px}
-
-.w3-container:after,.w3-container:before{content:"";display:table;clear:both}
-
-.w3-invisible{
-    display: none;
+.alert_Calendar {
+    position: fixed;
+    left:0;
+    bottom:0;
+    width: 100%;
+    padding: 0px 10px;
+    z-index: 20000;
 }
 
-.w3-visible{
+.visible {
     display: block;
 }
 
-.w3-bar-block{
-    width:100%;
-    min-width:100%;
-    text-align:left;
-    padding:8px 16px;
-    padding:8px 16px;
-    border:none;
-    white-space:normal;
-    float:none;
-    outline:0;
+.invisible {
+    display: none;
 }
 
-.w3-bar-block.w3-center{
-    text-align:center
+.container-schedule {
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    padding: 010px;
+    z-index: 20000;
 }
 
-@media (min-width:993px){
-    .w3-sidebar.w3-collapse{display:block!important}
+.btn-add-schedule {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
 }
 
-@media (max-width:992px){
-    .w3-sidebar.w3-collapse{display:none}
+.icon-form {
+    margin-right: 10px;
 }
-
-
-.w3-animate-left{position:relative;animation:animateleft 0.4s}
-@keyframes animateleft{from{left:-300px;opacity:0} to{left:0;opacity:1}}
+.row-form {
+    margin: 0px 10px;
+}
+.btns-container{
+    padding: 0px;
+}
+.btns-form:hover {
+    background-color: white;
+}
+.btns-form:active {
+    background-color: white;
+}
+.label-form {
+    padding: 0px;
+}

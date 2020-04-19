@@ -44,10 +44,10 @@ export default class DayView extends React.Component {
     render () {
         const header = this.getHeaderDayName();
         const schedule = this.generateHours();
-        console.log(schedule);
+
         return(
             <div>
-                <Table>
+                <Table responsive>
                     <thead>
                         <tr>
                             <th>
@@ -82,8 +82,6 @@ export default class DayView extends React.Component {
                         }
                     </tbody>
                 </Table>
-
-                
             </div>
         );
     }

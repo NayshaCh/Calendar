@@ -8,6 +8,7 @@ import CalendarToday from "@material-ui/icons/CalendarToday";
 import FaceRounded from '@material-ui/icons/FaceRounded'; //Icono paciente
 import InfoIcon from '@material-ui/icons/Info';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import CommentIcon from '@material-ui/icons/Comment'
 import { addAppointment, updateAppointement } from '../util/request';
 
 
@@ -18,10 +19,12 @@ class AppointmentForm extends React.Component {
         this.dayValue = React.createRef();
         this.hourValue = React.createRef();
         this.minValue = React.createRef();
-
+        this.comments = React.createRef();
     }
 
-    setDefaultData = (e) =>{
+    setDefaultData = (e) => {
+        const isNewAppointment = this.props.modal.appointment == null;
+        this.comments.current.value = isNewAppointment ? '': this.props.modal.appointment.comments;
         this.dayValue.current.value = this.props.modal.stringDate.date;
         this.hourValue.current.value = this.props.modal.stringDate.hour;
         this.minValue.current.value = this.props.modal.stringDate.min;
@@ -29,16 +32,19 @@ class AppointmentForm extends React.Component {
 
     onSubmitAppointment = (e, appointment, isNewAppointment) => {
         e.preventDefault();
+        
         const day = this.dayValue.current.value;
         const hour = this.hourValue.current.value;
         const min = this.minValue.current.value;
         const updAppointmentF = setUpdateFormat(appointment, day, hour, min);
         const addAppointmentF = setAddFormat(appointment, day, hour, min);
 
+        this.props.setModal(false, false, null);
+
         if(isNewAppointment){
-            addAppointment(addAppointmentF);
+            addAppointment(addAppointmentF, this.props.setDateSelected, this.props.showAlert);
         } else {
-            updateAppointement(updAppointmentF);
+            updateAppointement(updAppointmentF, this.props.setDateSelected, this.props.showAlert);
         }
     }
 
@@ -55,22 +61,34 @@ class AppointmentForm extends React.Component {
         return(
             <Modal show={this.props.modal.form} onHide={this.onHide} animation='true' onShow={this.setDefaultData}>
                 <Modal.Header closeButton>
-                    <Modal.Title >{appointment.title}</Modal.Title> 
+                    <Modal.Title ></Modal.Title> 
                 </Modal.Header>
                 <Form onSubmit={(e) => {this.onSubmitAppointment(e, appointment, isNewAppointment) }}>
                 <Modal.Body className="align-bottom">
-                <Container>
+                <Container fluid>
                     <Form.Group as={Row}>
-                        <CalendarToday/>
-                        <Form.Label>Date: </Form.Label>
-                        <Col>
+                        <Form.Label><h3>{appointment.title}</h3></Form.Label>
+                    </Form.Group>
+
+                    <Form.Group as={Row}>
+                        <Form.Label column xs='3' className='label-form'>
+                            <span className='d-inline icon-form '>
+                                <CalendarToday/>
+                            </span>
+                            Date: 
+                        </Form.Label>
+                        <Col >
                             <Form.Control type="date" ref={this.dayValue}/>
                         </Col>
                     </Form.Group>
                         
                     <Form.Group as={Row}>
-                        <AccessTimeIcon />
-                        <Form.Label>Hour: </Form.Label>
+                        <Form.Label column xs='3' className='label-form'>
+                            <span className='d-inline icon-form '>
+                                <AccessTimeIcon />
+                            </span>
+                            Hour: 
+                        </Form.Label>
                         <Col>
                             <Form.Control type='number' min='0' max='23' step='1' ref={this.hourValue}/>
                         </Col>
@@ -81,10 +99,14 @@ class AppointmentForm extends React.Component {
                     </Form.Group>
 
                     <Form.Group as={Row}>
-                        <InfoIcon/>
-                        <Form.Label>Status: </Form.Label>
+                        <Form.Label column xs='3' className='label-form'>
+                            <span className='d-inline icon-form '>
+                                <InfoIcon/>
+                            </span>
+                            Status: 
+                        </Form.Label>
                         {(!isPendingAppointment) && (
-                            <Col><Form.Label>{appointment.status}</Form.Label></Col>
+                            <Col><Form.Label >{appointment.status}</Form.Label></Col>
                         )}
                         {isPendingAppointment && (<Col><Form.Control as='select' ref={this.statusValue}>
                             <option value={STATUS_PENDING}>{STATUS_PENDING}</option>
@@ -92,11 +114,27 @@ class AppointmentForm extends React.Component {
                         </Form.Control></Col>)}
                     </Form.Group>
                     { (!isFreeAppointment) && (<Form.Group as={Row}>
-                            <FaceRounded/>
-                            <Form.Label>Patient: </Form.Label>
-                            <Col><Form.Label>{appointment.patientName}</Form.Label></Col>
+                        <Form.Label column xs='3' className='label-form'>
+                            <span className='d-inline icon-form '>
+                                <FaceRounded/>
+                            </span>
+                            Patient: 
+                        </Form.Label>
+                        <Col>
+                            <Form.Label>{appointment.patientName}</Form.Label>
+                        </Col>
                     </Form.Group>)}
-                
+                    
+                    <Form.Group as={Row}>
+                        <Form.Label column xs='3' className='label-form'> 
+                            <span className='d-inline '>
+                                <CommentIcon/>
+                            </span>  Comments: </Form.Label>
+                        <Col>
+                            <Form.Control as="textarea" ref={this.comments}/>
+                        </Col>
+                    </Form.Group>
+
                 </Container>
                 </Modal.Body>
                 <Modal.Footer>
