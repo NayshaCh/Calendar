@@ -1,0 +1,1 @@
+export const idDoctor = 1;
