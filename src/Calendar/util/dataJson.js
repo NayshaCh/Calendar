@@ -76,3 +76,133 @@ export const schedules = [
     }
 ];
 
+export const newFreeAppointments = [
+    [
+        {
+            id: 0,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-20T09:30:00"),
+            patientName: '',
+            comments: ''
+        }, {
+            id: 1,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-20T10:00:00"),
+            patientName: '',
+            comments: ''
+        }, {
+            id: 2,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-20T10:30:00"),
+            patientName: '',
+            comments: ''
+        }, {
+            id: 3,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-20T11:00:00"),
+            patientName: '',
+            comments: ''
+        }, {
+            id: 4,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-20T11:30:00"),
+            patientName: '',
+            comments: ''
+        }, {
+            id: 5,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-20T12:00:00"),
+            patientName: '',
+            comments: ''
+        }, {
+            id: 6,
+            idUser: 5,
+            status: 'Free',
+            date: new moment("2020-04-21T12:30:00"),
+            patientName: '',
+            comments: ''
+        }, {
+            id: 7,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-21T13:30:00"),
+            patientName: '',
+            comments: ''
+        }
+    ], [
+    ], [
+    ], [
+        {
+            id: 8,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-22T09:00:00"),
+            patientName: '',
+            comments: ''
+        }, {
+            id: 9,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-22T11:00:00"),
+            patientName: '',
+            comments: ''
+        }, {
+            id: 10,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-22T11:30:00"),
+            patientName: '',
+            comments: ''
+        }, {
+            id: 11,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-22T12:00:00"),
+            patientName: '',
+            comments: ''
+        }, {
+            id: 12,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-22T13:00:00"),
+            patientName: '',
+            comments: ''
+        }
+    ], [
+        {
+            id: 13,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-24T10:00:00"),
+            patientName: '',
+            comments: ''
+        }, {
+            id: 14,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-24T13:00:00"),
+            patientName: '',
+            comments: ''
+        }, {
+            id: 15,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-24T13:30:00"),
+            patientName: '',
+            comments: ''
+        }, {
+            id: 16,
+            idUser: null,
+            status: 'Free',
+            date: new moment("2020-04-24T14:00:00"),
+            patientName: '',
+            comments: ''
+        }
+    ]
+];

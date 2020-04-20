@@ -63,8 +63,10 @@ export const setUpdateFormat = (appointment, day, hour, min) => {
     return({
         id: appointment.id,
         data : {
+            id: appointment.id,
             idUser : appointment.idUser,
             idDoctor: idDoctor,
+            patientName: appointment.patientName,
             date: day,
             hour: hour + ':' + min,
             status: appointment.status,
@@ -102,6 +104,7 @@ export const getUpdateFormat = (appointment) =>{
         id: appointment.id,
         idUser : appointment.idUser,
         idDoctor: appointment.idDoctor,
+        patientName: appointment.patientName,
         date: new moment(appointment.date+" "+appointment.hour),
         status: appointment.status,
         comments: appointment.comments

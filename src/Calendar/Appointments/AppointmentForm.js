@@ -20,22 +20,25 @@ class AppointmentForm extends React.Component {
         this.hourValue = React.createRef();
         this.minValue = React.createRef();
         this.comments = React.createRef();
+        this.statusValue = React.createRef();
     }
 
     setDefaultData = (e) => {
         const isNewAppointment = this.props.modal.appointment == null;
         this.comments.current.value = isNewAppointment ? '': this.props.modal.appointment.comments;
+        this.statusValue.current.value = isNewAppointment ? STATUS_PENDING: this.props.modal.appointment.status;
         this.dayValue.current.value = this.props.modal.stringDate.date;
         this.hourValue.current.value = this.props.modal.stringDate.hour;
         this.minValue.current.value = this.props.modal.stringDate.min;
     }
 
-    onSubmitAppointment = (e, appointment, isNewAppointment) => {
+    onSubmitAppointment = (e, appointment, isNewAppointment, isPendingAppointment) => {
         e.preventDefault();
         
         const day = this.dayValue.current.value;
         const hour = this.hourValue.current.value;
         const min = this.minValue.current.value;
+        appointment.status = isPendingAppointment? this.statusValue.current.value: appointment.status;
         const updAppointmentF = setUpdateFormat(appointment, day, hour, min);
         const addAppointmentF = setAddFormat(appointment, day, hour, min);
 
@@ -63,7 +66,7 @@ class AppointmentForm extends React.Component {
                 <Modal.Header closeButton>
                     <Modal.Title ></Modal.Title> 
                 </Modal.Header>
-                <Form onSubmit={(e) => {this.onSubmitAppointment(e, appointment, isNewAppointment) }}>
+                <Form onSubmit={(e) => {this.onSubmitAppointment(e, appointment, isNewAppointment, isPendingAppointment) }}>
                 <Modal.Body className="align-bottom">
                 <Container fluid>
                     <Form.Group as={Row}>

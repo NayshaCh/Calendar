@@ -22,6 +22,8 @@ const tempAdd = (appointment) => {
 }
 
 const tempUpdate = (appointment) => {
+    console.log(appointment);
+    console.log(actAppointments);
     actAppointments = actAppointments.map((item) => {
         if(item.id !== appointment.id)
             item.date.set({
@@ -31,10 +33,11 @@ const tempUpdate = (appointment) => {
             item = appointment;
         return(item);
     });
+    
     actAppointments.sort((a,b) => {
         return (a.date > b.date) ? 1 : -1;
     });
-    
+    console.log(actAppointments);
 }
 
 export const addAppointment = (data, updateAppointments, showAlert) => {
@@ -67,7 +70,6 @@ export const updateAppointement = (appointment, updateAppointments, showAlert) =
         }
     }
     request.open("PUT", urlPrueba, true);
-    //Mandar datos por el body en JSON
     request.send(JSON.stringify(appointment.data));
 
     appointment = getUpdateFormat(appointment.data);
